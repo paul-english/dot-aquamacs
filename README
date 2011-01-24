@@ -1,0 +1,6 @@
+This is an aquamacs config based largely off of emacs-starter-kit functions and a handful of necessary configs
+
+install aquamacs by visiting http://aquamacs.org/
+
+install these configs to your mac user home directory by running 
+    install.sh
