@@ -375,18 +375,44 @@ Symbols matching the text at point are put first in the completion list."
 
 ;; end git 
 
-;; start project
-(load (concat startup-dir "worktracker.el"))
-
-;; maybe these should be in bindings?
-(global-set-key [f9] 'work-clockin)
-(global-set-key [f10] 'work-clockout)
-(global-set-key [f12] 'work-interrupted)
-(global-set-key [f11] 'work-resume)
-;; end project
-
 ;; start osx
 (setq mac-command-modifier 'meta)
 (setq x-select-enable-clipboard t)
 
 ;; end osx
+
+
+;;; This was installed by package-install.el.
+;;; This provides support for the package system and
+;;; interfacing with ELPA, the package archive.
+;;; Move this code earlier if you want to reference
+;;; packages in your .emacs.
+(when
+    (load
+     (expand-file-name "~/.emacs.d/elpa/package.el"))
+  (package-initialize))
+;; end elpa
+
+;; start php
+(add-hook 'php-mode-hook
+          (lambda ()
+            (setq tab-width 4
+				  c-basic-offset 4)))
+;; end php
+
+;; start org
+(require 'org-publish)
+(setq org-publish-project-alist
+      '(
+	("org-notes"
+	 :base-directory "~/Sites/"
+	 :base-extension "org"
+	 :publishing-directory "~/public_html/"
+	 :recursive t
+	 :publishing-function org-publish-org-to-html
+	 :headline-levels 4             ; Just the default for this project.
+	 :auto-preamble t
+	 )
+	("org" :components ("org-notes"))
+	))
+;; end org
