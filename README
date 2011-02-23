@@ -1,6 +1,8 @@
 This is an aquamacs config based largely off of emacs-starter-kit functions and a handful of necessary configs
 
-install aquamacs by visiting http://aquamacs.org/
+Install aquamacs by visiting http://aquamacs.org/
 
-install these configs to your mac user home directory by running 
+Install these configs to your mac user home directory by running 
     install.sh
+
+If you make any updates to your emacs configs use update.sh to update this git repository & push the changes back upstream
