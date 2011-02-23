@@ -402,6 +402,10 @@ Symbols matching the text at point are put first in the completion list."
 
 ;; start org
 (require 'org-publish)
+;; This is really annoying & I don't think it's working correctly
+(add-hook 'org-mode-hook
+	  (lambda ()
+	    (setq comment-start nil)))
 (setq org-publish-project-alist
       '(
 	("org-notes"
@@ -416,3 +420,8 @@ Symbols matching the text at point are put first in the completion list."
 	("org" :components ("org-notes"))
 	))
 ;; end org
+
+;; start jabber
+(add-to-list 'load-path "~/.emacs.d/emacs-jabber-0.8.0")
+(require 'jabber-autoloads)
+;; end jabber
