@@ -70,10 +70,14 @@ HYPERLINK HIGHLIGHT)"
 (defun scss-compile()
   "Compiles the current buffer, sass filename.scss filename.css"
   (interactive)
-    (compile (concat scss-sass-command " "
-          buffer-file-name " "
-          (first (split-string buffer-file-name ".scss")) ".css"
-	  scss-sass-options)))
+  (let ((compiler-output (shell-command-to-string 
+			  (concat scss-sass-command " "
+				  buffer-file-name " "
+				  (first (split-string buffer-file-name ".scss")) ".css"
+				  scss-sass-options))))
+    (if (string= compiler-output "")
+	(message "Compiled and saved %s" (concat (substring (buffer-file-name) 0 -6) ".css"))
+      (message (car (split-string compiler-output "[\n\r]+"))))))
 
 ;;;###autoload
 (define-derived-mode scss-mode css-mode "Scss"

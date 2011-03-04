@@ -381,7 +381,7 @@ path."
   (interactive)
   (let ((compiler-output (shell-command-to-string (js-command-compile (buffer-file-name)))))
     (if (string= compiler-output "")
-        (message "Compiled and saved %s" (concat (substring (buffer-file-name) 0 -6) "js"))
+        (message "Compiled and saved %s" (concat (substring (buffer-file-name) 0 -6) ".min.js"))
       (message (car (split-string compiler-output "[\n\r]+"))))))
 
 (add-hook 'after-save-hook
