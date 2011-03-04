@@ -279,6 +279,8 @@ Symbols matching the text at point are put first in the completion list."
 ;; end bindings
 
 ;; start misc
+(require 'uniquify)
+
 (ido-mode)
 
 (defalias 'yes-or-no-p 'y-or-n-p)
@@ -363,6 +365,30 @@ Symbols matching the text at point are put first in the completion list."
                              (0 (progn (compose-region (match-beginning 1)
                                                        (match-end 1) "ƒ")
                                        nil)))))))
+
+(defcustom jsmin-command "jsmin"
+  "The JavaScript command used for evaluating code. Must be in your
+path."
+  :type 'string
+  :group 'js)
+
+(defun js-command-compile (file-name)
+  "The `js-command' with args to compile a file."
+  (mapconcat 'identity (append (list jsmin-command) (list "<") (list file-name) (list ">") (list (replace-regexp-in-string "\\.js" ".min.js" file-name))) " "))
+
+(defun js-compile-file ()
+  "Compiles and saves the current file to disk. Doesn't open in a buffer.."
+  (interactive)
+  (let ((compiler-output (shell-command-to-string (js-command-compile (buffer-file-name)))))
+    (if (string= compiler-output "")
+        (message "Compiled and saved %s" (concat (substring (buffer-file-name) 0 -6) "js"))
+      (message (car (split-string compiler-output "[\n\r]+"))))))
+
+(add-hook 'after-save-hook
+	  '(lambda ()
+	     (when (string-match "\.js$" (buffer-name))
+	       (js-compile-file))))
+
 ;; end js
 
 ;; start css
