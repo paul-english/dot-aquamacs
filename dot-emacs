@@ -429,7 +429,7 @@ path."
 ;; start org
 (require 'org-publish)
 ;; This is really annoying & I don't think it's working correctly
-(add-hook 'org-mode-hook
+(add-hook 'org-load-hook
 	  (lambda ()
 	    (setq comment-start nil)))
 (setq org-publish-project-alist
@@ -451,3 +451,13 @@ path."
 (add-to-list 'load-path "~/.emacs.d/emacs-jabber-0.8.0")
 (require 'jabber-autoloads)
 ;; end jabber
+
+;; Twitter & Facebook org-mode automation
+(add-hook 'org-clock-in-hook
+	  (lambda ()
+	    (when (string-match "^tweet" org-clock-heading)
+	      (message
+	       (shell-command-to-string (concat 
+					 "ttytter -status='" 
+					 (replace-regexp-in-string "^tweet " "" org-clock-heading)
+					 "'"))))))
